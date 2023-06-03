@@ -1,0 +1,88 @@
+.color1 {color: #ff6e43;}
+.color2 {color: #ffac36;}
+.color3 {color: #ffe862;}
+.color4 {color: #fffba6;}
+.color5 {color: #fffbe2;}
+.color6 {color: #0f4337;}
+
+
+*{
+    margin: 0;
+    padding: 0;
+}
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/******************Navegador*****************/
+.navegador{
+    height: 30px;
+    background-color: #ffac36;
+    color: #0f4337;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav{
+    height: 50px;
+    background-color: #fffba6;
+}
+
+nav h1{
+    color: #0f4337;
+}
+
+.nav{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    margin-right: 20px;
+}
+
+nav ul{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+}
+
+/******************Navegador*****************/
+
+#container{
+    margin: 1rem;
+    margin-left: 9rem;
+}
+
+.border-right{
+    border-right: black solid 1px;
+}
+
+/******************Footer*****************/
+
+footer{
+    background-color: #ffac36;
+    color: #0f4337;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem;
+}
+
+footer ul{
+    list-style: none;
+}
+
+#contactanos{
+    font-family: 'Open Sans', sans-serif;
+}
+
+/******************Footer*****************/
+
+
+
+
+
