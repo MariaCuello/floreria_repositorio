@@ -4,15 +4,121 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="./style.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="/Style/style.css">
+
+     <!--Bootstrap-->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+     <!--fin bootstrap-->
+
+      <!--icono-->
+    <link rel="icon" href="/Imagenes/jazmin.png"/>
+    <!--fin icono-->
+    <title>Floristeria Sol</title>
 </head>
 
-<header>
-    <h1>FLORISTERIA SOL</h1>
-</header>
-
 <body>
+    <header>
+        <div class="navegador">
+            <img src="/Imagenes/envio.png"/> <h4>Envio gratis a partir de 50€ </h4>
+        </div>    
+        
+        <nav>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h1>FLORISTERIA SOL</h1>
+                </div>
+            
+                <div class="col-lg-6">
+                <div class="nav">  
+                    <ul>
+                        <li class="li"><img src="/Imagenes/usuario.png"></li>
+                        <li class="li"><img id="imagen_carrito" src="/Imagenes/carrito-de-compras.png"></li>  
+                    </ul>
+                </div>    
+                </div>
+            </div> 
+        </nav>
+    </header>
+
+    <div id="container" class="container text-center"></div>
+
+    <div class="d-flex justify-content-center">
+        <div class="row col-md-6">
+
+            <!-----------------Formulario inicio de sesion---------------->
+            <div id="formularioInicioSesion" class="container col-md-6 border-right">
+                <form class="inicioSesion">
+                    <div class="col-md-12">
+                        <label for="inputEmail4" class="form-label">Email</label>
+                        <input id="correoIS" type="email" class="form-control" id="inputEmail4" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="inputContraseña" class="form-label">Contraseña</label>
+                        <input id="contrasenaIS" type="Contraseña" class="form-control" id="inputContraseña" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Iniciar sesion</button>
+                </form>
+            </div>
+            <!-----------------Formulario inicio de sesion---------------->
+
+            <!----------------formulario de registro----------------------->
+            <div class="container col-md-6">
+                <form id="FormularioRegistro" class="registro">
+                    <div class="col-12">
+                        <label for="inputNombre" class="form-label">Nombre</label>
+                        <input id="nombreR" type="text" class="form-control" id="inputNombre" required>
+                    </div>
+                    <div class="col-12">
+                        <label for="inputApellido" class="form-label">Apellido</label>
+                        <input id="apellidoR" type="text" class="form-control" id="inputApellido" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="inputEmail4" class="form-label">Email</label>
+                        <input id="correoR" type="email" class="form-control" id="inputEmail4" required>
+                    </div> 
+                    <div class="col-md-12">
+                        <label for="inputContraseña" class="form-label">Contraseña</label>
+                        <input id="contrasenaR" type="Contraseña" class="form-control" id="inputContraseña" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Registrar</button>
+                </form>
+            </div>
+        <!----------------formulario de registro----------------------->
+        </div>
+    </div>
+
+   
+    <footer>
+        <article id="contactanos">
+            <h3>Contáctanos</h3>
+            <ul>
+                <li><img src="/Imagenes/marcador-de-posicion.png"> Diputación 90</li>
+                <li><img src="/Imagenes/telefono-fijo.png"> 933 508 350</li>
+                <li><img src="/Imagenes/telefono-inteligente.png"> 622 380 431</li>
+                <li><img src="/Imagenes/sobre.png"> floristeria_sol@gmail.com</li> 
+            </ul>
+
+            <article>
+                <!--mapa-->
+                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.6941545499253!2d2.1523145156778676!3d41.38072917926464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4
+                 f13.1!3m3!1m2!1s0x12a4a27d5133974b%3A0xe2286947839cde55!2sC%2F%20de%20la%20Diputaci%C3%B3%2C%2090%2C%2008015%20Barcelona!5e0!3m2!1ses!2ses!4v1675106427431!5m2!1
+                 ses!2ses" width="250px" height="200px" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <!--fin mapa-->
+             </article> 
+
+             <article>
+                <!--iconos redes-->
+                <a href="https://www.facebook.com/"><img src="/Imagenes/facebook.png"></a>
+                <a href="https://www.instagram.com"><img src="/Imagenes/instagram.png"></a>
+                <a href="https://www.pinterest.com"><img src="/Imagenes/pinterest.png"></a>      
+                <!--fin iconos redes-->
+            </article>
+
+    </footer>        
+    <!--Boostrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <!--Boostrap-->
+
     <script src="./main.js"> </script> 
 </body>
 </html>
