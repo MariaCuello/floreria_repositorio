@@ -174,7 +174,6 @@ const agregarCarrito = (producto) => {
                     localStorage.setItem("carrito_" + usuarioActivo.email, JSON.stringify(listaCarrito));
                 else
                     localStorage.setItem("carrito_" + usuarioActivo, JSON.stringify(listaCarrito));
-                console.log("entra y elimina ejecuta set" + usuarioActivo);
                 localStorage.setItem("carrito_" + usuarioActivo, JSON.stringify(listaCarrito));
             }
         });   
@@ -186,7 +185,7 @@ const agregarCarrito = (producto) => {
             localStorage.setItem("carrito_" + usuarioActivo.email, JSON.stringify(listaCarrito));
         else
             localStorage.setItem("carrito_" + usuarioActivo, JSON.stringify(listaCarrito));
-        console.log("entra y elimina ejecuta set" + usuarioActivo);
+        
     }
 };
 
