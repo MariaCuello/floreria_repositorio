@@ -10,9 +10,14 @@
     margin: 0;
     padding: 0;
 }
+
 html, body {
     max-width: 100%;
     overflow-x: hidden;
+}
+
+.container{
+    margin: 1rem;
 }
 
 /******************Navegador*****************/
@@ -51,14 +56,66 @@ nav ul{
 
 /******************Navegador*****************/
 
-#container{
-    margin: 1rem;
-    margin-left: 9rem;
-}
-
 .border-right{
     border-right: black solid 1px;
 }
+
+/****************Carrito****************/
+
+#pushbar {
+    width: 300px;
+    height: 100%;
+    position: fixed;
+    top: 80px;
+    right: -300px;
+    padding: 1rem; 
+    background-color: white;
+    border-left: solid 0.5rem #fffba6;
+    transition: right 0.3s ease; 
+}
+  
+#pushbar.open {
+    right: 0; 
+}
+  
+#open-pushbar {
+    position: fixed;
+    top: 20px;
+    right: 20px; 
+}
+
+.icon{
+    width: 25px;
+}
+
+.total{
+    background-color: #ffe862;
+}
+
+.boton{
+    width: 100%;
+    background-color: #ffac36;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+  
+/****************Carrito****************/
+
+
+/****************Formulario de registro****************/
+
+  
+/****************Formulario de registro****************/
+  
+  
+/****************Sweetalert****************/
+  body {
+    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
+  }
+/****************Sweetalert****************/
+
+
 
 /******************Footer*****************/
 
@@ -81,6 +138,38 @@ footer ul{
 }
 
 /******************Footer*****************/
+
+/******************carrito contador*****************/
+.parent {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+  .image1 {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+  .image2 {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+  }
+  .circle {
+    display: none;
+    width: 1rem;
+    height: 1rem;
+    line-height: 1rem;
+    border-radius: 50%;
+    font-size: 1rem;
+    color: white;
+    text-align: center;
+    background: red
+  }
+
+/******************carrito contador*****************/
+
+
 
 
 

@@ -1,3 +1,4 @@
+// clases
 class Producto {
     constructor(id, nombre, descripcion, precio, url) {
         this.id = id;
@@ -12,7 +13,6 @@ class Producto {
     }
 } 
 
-//ingreso usuario
 class Usuario {
     constructor(nombre,apellido, email, contrasena) {
         this.nombre = nombre;
@@ -25,7 +25,9 @@ class Usuario {
          " Correo: " + this.correo + " Contraseña: " + this.contrasena + "\n";
     }
 }
+//clases
 
+//productos por defecto
 const productos = [];
 const producto1 = new Producto(0, "Rosas", "Ramo de rosas, color rosa", 45.99, "/Imagenes/rosas.webp");
 const producto2 = new Producto(1, "Tulipanes", "Ramo de tulipanes color blanco", 45, "/Imagenes/ramo-de-tulipanes-blancos.webp");
@@ -56,67 +58,144 @@ productos.push(producto11);
 productos.push(producto12);
 productos.push(producto13);
 productos.push(producto14);
-   
-let carrito = "";
-let importeTotal = 0;
+//productos por defecto
+  
+//variables globales
+let importeTotal;
+let contador;
+let usuarioActivo = localStorage.getItem("usuario_activo");
+//variables globales
 
-/*function mostrarCarrito () {
-    prompt ("Carrito\n" + carrito + "\n¿Desea realizar el pago?");
-}*/
-
-function anadirCarrito (){
-    let salir = false;
-    while (salir === false) {
-        
-        
-        let anadirProducto = prompt ("¿Que producto deseas añadir a la cesta?\nEscribe el nombre del producto\n\n" + 
-        "Producto: " + producto1.nombre + "\nDescripcion: " + producto1.descripcion + "\nPrecio: " + producto1.precio + "\n\n" +
-        "Producto: " + producto2.nombre + "\nDescripcion: " + producto2.descripcion + "\nPrecio: " + producto2.precio + "\n\n" +
-        "Producto: " + producto3.nombre + "\nDescripcion: " + producto3.descripcion + "\nPrecio: " + producto3.precio + "\n\n" +
-        "Producto: " + producto4.nombre + "\nDescripcion: " + producto4.descripcion + "\nPrecio: " + producto4.precio + "\n\n" +
-        "Producto: " + producto5.nombre + "\nDescripcion: " + producto5.descripcion + "\nPrecio: " + producto5.precio + "\n\n" +
-        "Producto: " + producto6.nombre + "\nDescripcion: " + producto6.descripcion + "\nPrecio: " + producto6.precio + "\n\n" +
-        "Producto: " + producto7.nombre + "\nDescripcion: " + producto7.descripcion + "\nPrecio: " + producto7.precio + "\n\n" +
-        "Producto: " + producto8.nombre + "\nDescripcion: " + producto8.descripcion + "\nPrecio: " + producto8.precio + "\n\n" +
-        "Producto: " + producto9.nombre + "\nDescripcion: " + producto9.descripcion + "\nPrecio: " + producto9.precio + "\n\n" +
-        "Producto: " + producto10.nombre + "\nDescripcion: " + producto10.descripcion + "\nPrecio: " + producto10.precio + "\n\n" +
-        "Producto: " + producto11.nombre + "\nDescripcion: " + producto11.descripcion + "\nPrecio: " + producto11.precio + "\n\n" +
-        "Producto: " + producto12.nombre + "\nDescripcion: " + producto12.descripcion + "\nPrecio: " + producto12.precio);
-
-        const producto = productos.find ((item) => item.nombre.toLowerCase() === anadirProducto.toLowerCase()); 
-        
-        if (producto) {
-            carrito += `Producto: ${producto.nombre}\nDescripcion: ${producto.descripcion}\nPrecio: ${producto.precio}\n\n`;
-            importeTotal += producto.precio;
-        }else {
-            alert("El producto no existe");
-        }
-
-        let continuar = prompt ("¿Deseas añadir otro producto a la cesta?");
-        
-        if (continuar === "no") {
-                salir = true; 
-                carrito += `Total: ${importeTotal.toFixed(2)}\n`; 
-        }
-    }
-}   
+//la primera vez que entra el valor de usuarioActivo es null (luego nos manejamos con un String)
+if(usuarioActivo === null) {
+    usuarioActivo = "null";
+}
  
 /**********Ejecucion del programa************/
-
-//anadirCarrito ();
-//mostrarCarrito ();
-
-
-/**********Codigo nuevo*************/
-const listaCarrito = [];
 //contenedor de la lista de productos
+let listaCarrito = [];
 const container = document.getElementById("container");
 
 const row = document.createElement("div");
 row.className = "row";
 
+//carrito pushbar
+let cartImage = document.getElementById('imagen_carrito');
+let pushbar = document.getElementById('pushbar');
+let openPushbarBtn = document.getElementById('open-pushbar');
+let pushbarContent = document.getElementById('pushbar-content'); 
 
-//añadir los productos al html
+cartImage.addEventListener('click', function() {
+    if(listaCarrito.length > 0)
+        pushbar.classList.toggle('open');
+});
+//carrito pushbar
+
+//cargar el carrito al iniciar sesion o al registrarse
+const cargarCarritoPushbar = (email) => {
+    let listaCarrito = localStorage.getItem("carrito_" + email);
+    if(listaCarrito){
+        listaCarrito = JSON.parse(listaCarrito);
+        listaCarrito.forEach(item => {
+            agregarCarrito(item);
+        });
+    } else
+        listaCarrito = [];
+};
+const duplicados = (producto) => {
+    let i = 0;
+    for (const item of listaCarrito) {
+        if(producto.id === item.id)
+            i++;
+    }
+    return i;
+};
+
+const total = () => {
+    let total = 0;
+    for (const item of listaCarrito) {
+        total += item.precio;
+    }        
+    return total.toFixed(2);
+}
+
+const agregarCarrito = (producto) => {
+    listaCarrito.push(producto);
+    contador = document.getElementById("contador_carrito");
+    contador.style.display = 'inline';
+    contador.innerHTML = listaCarrito.length + "";
+
+    //comprobar duplicados
+    let cantidad = duplicados(producto);
+    let precio = producto.precio * cantidad;
+    importeTotal = document.getElementById("total");
+    if(cantidad > 1){
+        let cantidadHTML = document.getElementById(producto.id + "_cantidad");
+        let precioHTML = document.getElementById(producto.id + "_precio");
+        cantidadHTML.innerHTML = cantidad.toString();
+        precioHTML.innerHTML = precio.toFixed(2).toString();
+    } else {
+        let productoPushbar = document.createElement("div");
+        productoPushbar.innerHTML += `
+        <div class="row text-center border-bottom">
+            <h6 id="${producto.id}_cantidad" class="col-md-3">${cantidad}</h6>
+            <h6 class="col-md-3">${producto.nombre}</h6>
+            <h6 id="${producto.id}_precio" class="col-md-3">${precio}</h6>
+            <div class="col-md-3"><img id="${producto.id}" class="icon" src="/Imagenes/borrar.png"></div>
+        </div>    
+        `;
+        pushbarContent.append(productoPushbar);
+        let eliminar = document.getElementById(producto.id);
+        eliminar.addEventListener("click", () => {
+
+            //comprobar duplicados
+            let cantidad = duplicados(producto) - 1;
+            let precio = producto.precio * cantidad;
+            if(cantidad >= 1){
+                let cantidadHTML = document.getElementById(producto.id + "_cantidad");
+                let precioHTML = document.getElementById(producto.id + "_precio");
+                cantidadHTML.innerHTML = cantidad.toString();
+                precioHTML.innerHTML = precio.toFixed(2).toString();
+                listaCarrito.splice(listaCarrito.indexOf(producto), 1);
+            } else {
+                listaCarrito.splice(listaCarrito.indexOf(producto), 1);
+                pushbarContent.removeChild(productoPushbar);    
+            }
+            
+            if(listaCarrito.length === 0){
+                contador.style.display = 'none';
+                pushbar.classList.remove('open');
+            }
+            contador.innerHTML = listaCarrito.length + "";
+            importeTotal.innerHTML = "Total: " + total().toString();
+            //guardamos la cesta en el storage si hay un usuario logueado
+            if(usuarioActivo !== "null") {
+                if(usuarioActivo !== "undefined")
+                    localStorage.setItem("carrito_" + usuarioActivo.email, JSON.stringify(listaCarrito));
+                else
+                    localStorage.setItem("carrito_" + usuarioActivo, JSON.stringify(listaCarrito));
+                console.log("entra y elimina ejecuta set" + usuarioActivo);
+                localStorage.setItem("carrito_" + usuarioActivo, JSON.stringify(listaCarrito));
+            }
+        });   
+    }
+    importeTotal.innerHTML = "Total: " + total().toString();
+    //guardamos la cesta en el storage si hay un usuario logueado
+    if(usuarioActivo !== "null"){
+        if(usuarioActivo !== "undefined")
+            localStorage.setItem("carrito_" + usuarioActivo.email, JSON.stringify(listaCarrito));
+        else
+            localStorage.setItem("carrito_" + usuarioActivo, JSON.stringify(listaCarrito));
+        console.log("entra y elimina ejecuta set" + usuarioActivo);
+    }
+};
+
+//recuperar datos de la cesta en caso de que este iniciada la sesion
+if(usuarioActivo !== "null") 
+    cargarCarritoPushbar(usuarioActivo);
+
+    
+//Añadir los productos al html
 productos.forEach((item) => {
     const card = document.createElement("div");
     card.className = "col-lg-2 col-sm-6";
@@ -125,28 +204,17 @@ productos.forEach((item) => {
     <div class="card-body">
         <h5 class="card-title">${item.nombre}</h5>
         <p class="card-text">${item.descripcion}</p>
-        <a id="button_${item.id}" href="#" class="btn btn-primary">Añadir a la cesta</a>
+        <button id="button_${item.id}" class="boton">Añadir a la cesta</button>
     </div>
     </div>`;
     row.append(card);
     container.append(row);
 
-    const agregarCarrito = (producto) => {
-        alert(producto.toString());
-        listaCarrito.push(producto);
-    };
-        
+    //Añadir a la cesta
     let button = document.getElementById("button_" + item.id);
     button.addEventListener("click", () => agregarCarrito(item));
   });
-
-  const mostrarCarrito = () => {
-    alert(listaCarrito);
-   };
-
-  //cesta de la compra
-  let button_carrito = document.getElementById("imagen_carrito");
-  button_carrito.addEventListener("click",() => mostrarCarrito());
+  //Añadir los productos al html
 
   function iniciarSesion(correo, contrasena){
     let usuarios = localStorage.getItem("usuarios");
@@ -173,38 +241,138 @@ productos.forEach((item) => {
     const usuario = new Usuario (nombre, apellido, correo, contrasena);
     usuarios.push(usuario);
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
-    return true;
+    return usuario;
   }
-  
-  //inicio de sesion
+
+const inicioUsuario = () => {
+
+  let inicio_registro = document.createElement("div");
+  inicio_registro.className = "d-flex justify-content-center";
+  inicio_registro.id = "i_r";
+  inicio_registro.innerHTML = `
+  <div class="row col-md-6">
+  <!-----------------Formulario inicio de sesion---------------->
+  <div id="formularioInicioSesion" class="container col-md-6 border-right">
+      <form class="inicioSesion">
+          <div class="col-md-12">
+              <label for="inputEmail4" class="form-label">Email</label>
+              <input id="correoIS" type="email" class="form-control" id="inputEmail4" required>
+          </div>
+          <div class="col-md-12">
+              <label for="inputContraseña" class="form-label">Contraseña</label>
+              <input id="contrasenaIS" type="password" class="form-control" id="inputContraseña" required>
+          </div>
+              <button type="submit" class="boton">Iniciar sesion</button>
+      </form>
+  </div>
+  <!-----------------Formulario inicio de sesion---------------->
+
+  <!----------------formulario de registro----------------------->
+  <div class="container col-md-6">
+      <form id="FormularioRegistro" class="registro">
+          <div class="col-12">
+              <label for="inputNombre" class="form-label">Nombre</label>
+              <input id="nombreR" type="text" class="form-control" id="inputNombre" required>
+          </div>
+          <div class="col-12">
+              <label for="inputApellido" class="form-label">Apellido</label>
+              <input id="apellidoR" type="text" class="form-control" id="inputApellido" required>
+          </div>
+          <div class="col-md-12">
+              <label for="inputEmail4" class="form-label">Email</label>
+              <input id="correoR" type="email" class="form-control" id="inputEmail4" required>
+          </div> 
+          <div class="col-md-12">
+              <label for="inputContraseña" class="form-label">Contraseña</label>
+              <input id="contrasenaR" type="password" class="form-control" id="inputContraseña" required>
+          </div>
+          <button type="submit" class="boton">Registrar</button>
+      </form>
+  </div>
+</div>
+  `
+  let dropdown = document.getElementById("dropdown");
+  if(usuarioActivo !== "null"){
+    dropdown.hidden = false;
+
+    const cerrarSesion = () => {
+        localStorage.setItem("usuario_activo", null);
+        location.reload();
+    };
+
+    let cerrar_sesion = document.getElementById("cerrar_sesion");
+    cerrar_sesion.addEventListener("click",() => cerrarSesion());
+
+  } else {
+  //añadir al container
+  let container_sup = document.getElementById("container_sup");
+  if(!container_sup.querySelector("#i_r"))
+    container_sup.append(inicio_registro);
+  dropdown.hidden = true;
+  container.hidden = true;
+    
+  //inicio sesion
   let formuarioIS = document.getElementById("formularioInicioSesion");
   formuarioIS.addEventListener("submit", (e) => {
     e.preventDefault();
     
     let correo = document.getElementById("correoIS");
-    console.log(correo.value);
     let contrasena = document.getElementById("contrasenaIS");
-    console.log(contrasena.value);
+    usuarioActivo = iniciarSesion(correo.value, contrasena.value);
 
-    if(iniciarSesion(correo.value, contrasena.value))
-        //mostrar la lista de productos
-        alert("Sesion iniciada");
-    else
-        alert("Correo o contraseña incorrectos");
+    if(usuarioActivo){
+        localStorage.setItem("usuario_activo", usuarioActivo.email);
+        cargarCarritoPushbar(usuarioActivo.email);
+        container.hidden = false;
+        container_sup.removeChild(inicio_registro);
+    } else
+        mostrarAlert("Error al iniciar sesion", "Correo o contraseña incorrectos", "error", false)
   });
 
   //registro
   let formuarioR = document.getElementById("FormularioRegistro");
   formuarioR.addEventListener("submit", (e) => {
     e.preventDefault();
-    
+
     let correo = document.getElementById("correoR");
     let contrasena = document.getElementById("contrasenaR");
     let nombre = document.getElementById("nombreR");
     let apellido = document.getElementById("apellidoR");
+    usuarioActivo = registro(nombre.value, apellido.value, correo.value, contrasena.value);
 
-    if(registro(nombre.value, apellido.value, correo.value, contrasena.value))
-        alert("Usuario creado correctamente");
+    if(usuarioActivo){
+        localStorage.setItem("usuario_activo", usuarioActivo.email);
+        container.hidden = false;
+        container_sup.removeChild(inicio_registro);
+    }
     else
-        alert("No se ha podido crear el usuario");
-  });
+        mostrarAlert("Error al registrarse", "No se ha podido crear el usuario", "error", false);
+    });
+  }
+};
+
+//boton inicio de sesion o registro
+let boton_usuario = document.getElementById("inicio_usuario");
+boton_usuario.addEventListener("click",() => inicioUsuario());
+
+let boton_comprar = document.getElementById("pushbar-boton-comprar");
+boton_comprar.addEventListener("click",() => mostrarAlert("Gracias por su compra!", "Compra realizada con exito", "success", true));
+
+//Seweet alert mensaje de aviso
+function mostrarAlert (titulo, mensaje, tipo, comprar) {
+    Swal.fire({
+        title: titulo,
+        text: mensaje,
+        type: tipo
+    }).then(function() {
+        if(comprar) {
+            listaCarrito = [];
+            if(usuarioActivo !== "undefined")
+                    localStorage.setItem("carrito_" + usuarioActivo.email, JSON.stringify(listaCarrito));
+                else
+                    localStorage.setItem("carrito_" + usuarioActivo, JSON.stringify(listaCarrito));
+            location.reload();
+        }
+    });
+}
+    
